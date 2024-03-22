@@ -1,7 +1,7 @@
 import React from "react";
 
-function CategoryHeader() {
+function CategoryBar() {
   return <div>CategoryHeader</div>;
 }
 
-export default CategoryHeader;
+export default CategoryBar;
