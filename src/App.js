@@ -88,10 +88,11 @@ function App() {
     <PageProvider>
       <SellerProvider>
         <div
-          className="App 
-          font-TradeWinds 
-          min-h-screen bg-cover
-          relative flex flex-col items-center"
+          className="w-full"
+          // className="App
+          // font-TradeWinds
+          // min-h-screen bg-cover
+          // relative flex flex-col items-center"
           //bg-golf
         >
           <RouterProvider router={router} />
