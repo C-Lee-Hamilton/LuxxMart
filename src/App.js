@@ -1,24 +1,96 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { PageProvider } from "./Context/PageContext";
+import { SellerProvider } from "./Context/SellerContext";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Main from "./Components/Main";
+
+import Cart from "./Pages/Cart";
+import Checkout from "./Pages/Checkout";
+import CreateAccount from "./Pages/CreateAccount";
+import ErrorPage from "./Pages";
+import Login from "./Pages/Login";
+import Search from "./Pages/search";
+import SellerHome from "./Pages/sellerHome";
+import Settings from "./Pages/Settings";
+import ShopPage from "./Pages/ShopPage";
+import UserHome from "./Pages/userHome";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
+        index: true,
+        element: <UserHome />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/cart/:id",
+        element: <Cart />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/productpage/:id",
+        element: <ProductPage />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/search/:params",
+        element: <Search />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/sellerhome",
+        element: <SellerHome />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/shop/:id",
+        element: <ShopPage />,
+        error: <ErrorPage />,
+      },
+    ],
+  },
+  {
+    path: "/createAccount",
+    element: <CreateAccount />,
+    error: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    error: <ErrorPage />,
+  },
+
+  {
+    path: "/settings",
+    element: <Settings />,
+    error: <ErrorPage />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <PageProvider>
+      <SellerProvider>
+        <div
+          className="App 
+          font-TradeWinds 
+          min-h-screen bg-cover
+          relative flex flex-col items-center"
+          //bg-golf
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <RouterProvider router={router} />
+        </div>
+      </SellerProvider>
+    </PageProvider>
   );
 }
 
