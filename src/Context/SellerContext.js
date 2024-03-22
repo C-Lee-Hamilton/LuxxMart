@@ -3,8 +3,8 @@ import React, { createContext, useContext } from "react";
 
 const SellerContext = createContext();
 
-export const usePageContext = () => useContext(PageContext);
+export const usePageContext = () => useContext(SellerContext);
 
-export const PageProvider = ({ children }) => {
+export const SellerProvider = ({ children }) => {
   return <SellerContext.Provider value={{}}>{children}</SellerContext.Provider>;
 };

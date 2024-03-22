@@ -6,15 +6,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./Components/Main";
 
 import Cart from "./Pages/Cart";
+import Categories from "./Pages/Categories";
 import Checkout from "./Pages/Checkout";
 import CreateAccount from "./Pages/CreateAccount";
-import ErrorPage from "./Pages";
+import ErrorPage from "./Pages/ErrorPage";
 import Login from "./Pages/Login";
-import Search from "./Pages/search";
-import SellerHome from "./Pages/sellerHome";
+import ProductPage from "./Pages/ProductPage";
+import Search from "./Pages/Search";
+import SellerHome from "./Pages/SellerHome";
 import Settings from "./Pages/Settings";
 import ShopPage from "./Pages/ShopPage";
-import UserHome from "./Pages/userHome";
+import UserHome from "./Pages/UserHome";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,11 @@ const router = createBrowserRouter([
       {
         path: "/cart/:id",
         element: <Cart />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/categories",
+        element: <Categories />,
         error: <ErrorPage />,
       },
       {
