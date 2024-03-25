@@ -4,7 +4,7 @@ import NavigationBar from "./NavigationBar";
 import CategoryBar from "./CategoryBar";
 function Main() {
   return (
-    <div className="">
+    <div className="h-full">
       <NavigationBar />
       <CategoryBar />
       <Outlet />

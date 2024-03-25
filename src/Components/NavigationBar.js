@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../Media/logo.png";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-
+import { Link } from "react-router-dom";
 import { InputWithButton } from "./ui/InputWithButton";
 import { BsCart } from "react-icons/bs";
 import Locationdialog from "./ui/locationdialog";
@@ -34,9 +34,12 @@ function NavigationBar() {
           <span className="text-sm truncate font-bold">Account & Lists</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuItem>My Account</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Login</DropdownMenuItem>
+
+          <DropdownMenuItem>
+            <Link to="/login">Login</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>Account Settings</DropdownMenuItem>
           <DropdownMenuItem>Recent Searches</DropdownMenuItem>
           <DropdownMenuItem>Subscription</DropdownMenuItem>
