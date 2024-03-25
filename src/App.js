@@ -29,12 +29,14 @@ const router = createBrowserRouter([
         error: <ErrorPage />,
       },
       {
-        path: "/cart/:id",
+        path: "/cart/",
+        //add id to path
         element: <Cart />,
         error: <ErrorPage />,
       },
       {
         path: "/categories",
+        //add parameters
         element: <Categories />,
         error: <ErrorPage />,
       },
@@ -44,12 +46,14 @@ const router = createBrowserRouter([
         error: <ErrorPage />,
       },
       {
-        path: "/productpage/:id",
+        path: "/productpage/",
+        //add parameters :itemid
         element: <ProductPage />,
         error: <ErrorPage />,
       },
       {
-        path: "/search/:params",
+        path: "/search",
+        //add parameters
         element: <Search />,
         error: <ErrorPage />,
       },
