@@ -5,13 +5,12 @@ function UserHome() {
   return (
     <div className="h-full flex flex-col w-full">
       <IndexCarousel />
-      <div className="h-2/3 flex flex-col w-full">
-        <ItemCarousel />
-        <ItemCarousel />
-        <ItemCarousel />
-        <ItemCarousel />
-        <ItemCarousel />
-      </div>
+
+      <ItemCarousel />
+      <ItemCarousel />
+      <ItemCarousel />
+      <ItemCarousel />
+      <ItemCarousel />
     </div>
   );
 }

@@ -11,7 +11,7 @@ import {
   SheetTrigger,
   SheetClose,
 } from "./sheet";
-
+import { Link } from "react-router-dom";
 function LinkDrawer() {
   return (
     <Sheet>
@@ -24,24 +24,51 @@ function LinkDrawer() {
       <SheetContent side="left" className="w-1/3 min-w-80 bg-greyblue h-full">
         <div className="mx-auto w-full h-full max-w-sm">
           <SheetDescription className=" mb-2 pl-4  text-offwhite mt-2 text-2xl">
-            Hello, Please Sign In
+            <Link to="/login">Hello, Please Sign In</Link>
           </SheetDescription>
           <div className="bg-offwhite pl-4 w- mx-auto h-full flex flex-col gap-5 ">
             <SheetTitle className="mt-4">Shop By Department</SheetTitle>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetTitle>Programs</SheetTitle>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
+            <Link to="/categories" className="text-muted-foreground">
+              Home and Kitchen
+            </Link>
+            <Link to="/categories" className="text-muted-foreground">
+              Women's Fashion
+            </Link>
+            <Link to="/categories" className="text-muted-foreground">
+              Men's Fashion
+            </Link>
+            <Link to="/categories" className="text-muted-foreground">
+              Metals and Gems
+            </Link>
             <SheetTitle>Help & Settings</SheetTitle>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
-            <SheetDescription>placeholder</SheetDescription>
-
+            <Link to="/settings" className="text-muted-foreground">
+              Settings
+            </Link>
+            <Link to="/FAQ" className="text-muted-foreground">
+              FAQ
+            </Link>
+            <SheetTitle>Customer Service</SheetTitle>
+            <SheetDescription className="text-xs">
+              Phone: +1 555-867-5309{" "}
+            </SheetDescription>
+            <SheetDescription className="text-xs">
+              Email: loremIpsum@loremIpsum.com{" "}
+            </SheetDescription>
+            <SheetDescription className="text-xs">
+              Hours: 8:00-5:30 PM EST{" "}
+            </SheetDescription>
+            <SheetDescription className="text-xs">
+              Closed Sundays
+            </SheetDescription>
+            <Link
+              to="/login"
+              className="w-2/3 mx-10 text-center py-4 bg-greyblue text-white  rounded-lg mt-5"
+            >
+              {" "}
+              Login or Sign Up
+            </Link>
             <SheetClose className="" asChild>
-              <Button className="w-2/3 mx-10  mt-20">
+              <Button className="w-2/3 mx-10 border-none bg-offwhite text-muted-foreground mb-0">
                 Click Anywhere To Close
               </Button>
             </SheetClose>

@@ -9,13 +9,30 @@ function CategoryBar() {
     <div className="w-full bg-greyblue flex flex-row whitespace-nowrap  overflow-hidden">
       <LinkDrawer />
       <>
-        <Link className={linkStyle}>Today's Deals</Link>
-        <Link className={linkStyle}>Gems and Jewelry</Link>
-        <Link className={linkStyle}>Home and Office</Link>
-        <Link className={linkStyle}>Kitchen</Link>
-        <Link className={linkStyle}>Time Pieces</Link>
-        <Link className={linkStyle}>Rare Metals</Link>
-        <Link className={linkStyle}>Customer Service</Link>
+        <Link to="/categories" className={linkStyle}>
+          Today's Deals
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Gems
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Jewelry
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Home and Office
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Kitchen
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Time Pieces
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Rare Metals
+        </Link>
+        <Link to="/categories" className={linkStyle}>
+          Apparel
+        </Link>
       </>
     </div>
   );

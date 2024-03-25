@@ -14,7 +14,7 @@ function ItemCarousel() {
         align: "start",
         loop: true,
       }}
-      className="w-full p-4 mb-20 mt-10 bg-white-500  h-1/6"
+      className="w-full p-4 mb-5 mt-0 bg-white-500  h-1/6"
     >
       <CarouselContent className=" bg-white ">
         {Array.from({ length: 15 }).map((_, index) => (

@@ -35,24 +35,32 @@ function NavigationBar() {
           <span className="text-sm truncate font-bold">Account & Lists</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>My Account</DropdownMenuItem>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
           <DropdownMenuItem>
             <Link to="/login">Login</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>Account Settings</DropdownMenuItem>
-          <DropdownMenuItem>Recent Searches</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link to="/settings"> Account Settings</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link to="/searchhistory">Search History</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link to="/search">Wish List</Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button className="bg-black hover:bg-black">
-        <div className="flex text-left flex-col mt-1 text-gold">
-          <span className="text-xs">Returns</span>
+      <Link to="/ordersreturns">
+        <Button className="bg-black hover:bg-black">
+          <div className="flex text-left flex-col mt-1 text-gold">
+            <span className="text-xs">Returns</span>
 
-          <span className="font-bold text-sm">&Orders</span>
-        </div>
-      </Button>
+            <span className="font-bold text-sm">&Orders</span>
+          </div>
+        </Button>
+      </Link>
       <Link to="/cart">
         <Button className="bg-black  hover:bg-black mr-6 relative">
           <Badge className="absolute bg-black">100</Badge>

@@ -33,7 +33,11 @@ function LoginCard() {
             </div>
             <h1 className="text-xs">
               By continuing, you agree to LuxxMart's
-              <Link className="text-blue-500">
+              <Link
+                to="/termsOfService"
+                target="_blank"
+                className="text-blue-500"
+              >
                 {" "}
                 Conditions of Use and Privacy Notice.
               </Link>

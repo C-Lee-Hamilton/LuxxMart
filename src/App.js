@@ -17,7 +17,10 @@ import SellerHome from "./Pages/SellerHome";
 import Settings from "./Pages/Settings";
 import ShopPage from "./Pages/ShopPage";
 import UserHome from "./Pages/UserHome";
-
+import OrdersReturns from "./Pages/OrdersReturns";
+import SearchHistory from "./Pages/SearchHistory";
+import TOS from "./Pages/TOS";
+import FAQ from "./Pages/FAQ";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +49,16 @@ const router = createBrowserRouter([
         error: <ErrorPage />,
       },
       {
+        path: "/FAQ",
+        element: <FAQ />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/ordersreturns",
+        element: <OrdersReturns />,
+        error: <ErrorPage />,
+      },
+      {
         path: "/productpage/",
         //add parameters :itemid
         element: <ProductPage />,
@@ -58,8 +71,19 @@ const router = createBrowserRouter([
         error: <ErrorPage />,
       },
       {
+        path: "/searchhistory",
+        //add parameters
+        element: <SearchHistory />,
+        error: <ErrorPage />,
+      },
+      {
         path: "/sellerhome",
         element: <SellerHome />,
+        error: <ErrorPage />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
         error: <ErrorPage />,
       },
       {
@@ -74,15 +98,15 @@ const router = createBrowserRouter([
     element: <CreateAccount />,
     error: <ErrorPage />,
   },
+
   {
     path: "/login",
     element: <Login />,
     error: <ErrorPage />,
   },
-
   {
-    path: "/settings",
-    element: <Settings />,
+    path: "/termsOfService",
+    element: <TOS />,
     error: <ErrorPage />,
   },
 ]);
@@ -91,7 +115,7 @@ function App() {
   return (
     <PageProvider>
       <SellerProvider>
-        <div className="w-full h-screen bg-offwhite">
+        <div className="w-full h-full bg-offwhite">
           <RouterProvider router={router} />
         </div>
       </SellerProvider>

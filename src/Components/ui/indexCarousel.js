@@ -10,16 +10,16 @@ import {
 } from "./carousel";
 function IndexCarousel() {
   return (
-    <Carousel className="w-full h-1/3 flex  mx-auto ">
+    <Carousel className="    ">
       <CarouselContent className=" w-screen h-full">
         <CarouselItem className=" bg-blue-500 ">
-          <div className="p-1 "></div>
+          <div className="p-40"></div>
         </CarouselItem>
         <CarouselItem className=" bg-green-500 ">
-          <div className="p-1"></div>
+          <div className="p-40"></div>
         </CarouselItem>
         <CarouselItem className=" bg-red-500 ">
-          <div className="p-1"></div>
+          <div className="p-40"></div>
         </CarouselItem>
       </CarouselContent>
       <CarouselPrevious className="" />
