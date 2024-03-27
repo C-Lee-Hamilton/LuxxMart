@@ -33,6 +33,9 @@ function CategoryBar() {
         <Link to="/categories" className={linkStyle}>
           Apparel
         </Link>
+        <Link to="/sellerhome" className={linkStyle}>
+          Seller Home
+        </Link>
       </>
     </div>
   );
