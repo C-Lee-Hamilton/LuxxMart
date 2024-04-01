@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { auth, db } from "../../config/firebase";
+import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
@@ -10,8 +12,44 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-function createSellerCard() {
-  return (
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+function CreateSellerCard() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busName, setBusName] = useState("");
+  const [taxId, setTaxId] = useState("");
+  const [busId, setBusId] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const createAccount = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await setDoc(doc(db, "Business Users", userCredential.user.uid), {
+        businessId: busId,
+        taxId: taxId,
+        businessName: busName,
+      });
+
+      setSuccess(true);
+      setEmail("");
+      setPassword("");
+      setBusId("");
+      setBusName("");
+      setTaxId("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return success ? (
+    <Navigate to="/login" />
+  ) : (
     <div className="w-full flex flex-col items-center ">
       <Card className="w-2/5 ">
         <CardHeader>
@@ -20,14 +58,31 @@ function createSellerCard() {
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
-              <Input className="w-full" placeholder="Business Name" />
-              <Input className="w-full" placeholder="Email" />
-              <Button variant="secondary">Upload Store Photo</Button>
-              <Input className="w-full" placeholder="business ID" />
-              <Input className="w-full" placeholder="tax ID" />
-              <Input className="w-full" placeholder="Password" />
-
-              <Input className="w-full" placeholder="Re-enter Password" />
+              <Input
+                onChange={(e) => setBusName(e.target.value)}
+                className="w-full"
+                placeholder="Business Name"
+              />
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full"
+                placeholder="Email"
+              />
+              <Input
+                onChange={(e) => setBusId(e.target.value)}
+                className="w-full"
+                placeholder="business ID"
+              />
+              <Input
+                onChange={(e) => setTaxId(e.target.value)}
+                className="w-full"
+                placeholder="tax ID"
+              />
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full"
+                placeholder="Password"
+              />
               <h1 className="text-xs">
                 By continuing, you agree to LuxxMart's
                 <Link
@@ -43,7 +98,7 @@ function createSellerCard() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button>Create Account</Button>
+          <Button onClick={createAccount}>Create Account</Button>
         </CardFooter>
       </Card>
       <Link
@@ -57,4 +112,4 @@ function createSellerCard() {
   );
 }
 
-export default createSellerCard;
+export default CreateSellerCard;

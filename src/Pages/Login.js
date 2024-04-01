@@ -1,8 +1,8 @@
 import React from "react";
-import LoginCard from "../Components/loginCards/loginCard";
+
 import { Link } from "react-router-dom";
 import Logo from "../Media/logo.png";
-import { LucideNavigation } from "lucide-react";
+
 import { Outlet } from "react-router-dom";
 function Login() {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SellerItemTable from "../../Components/SellerItemTable";
-
+import { Button } from "../../Components/ui/button";
 function SellerHome() {
   return (
     <div className="w-full flex flex-col items-center h-screen border-solid border-greyblue border-2">
@@ -11,6 +11,7 @@ function SellerHome() {
         </span>
         <h1 className="h-full bg-red-300 w-3/4">Store Name</h1>
       </div>
+      <Button variant="secondary">Upload Store Photo</Button>
       <Link
         className="p-5 mt-0 border-solid border-greyblue border-2 bg-gold rounded-sm hover:bg-darkgold"
         to="/additem"

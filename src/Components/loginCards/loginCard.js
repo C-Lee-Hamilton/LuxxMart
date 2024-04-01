@@ -1,6 +1,10 @@
-import React from "react";
+import { auth, googleProvider } from "../../config/firebase";
+import React, { useState } from "react";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import googleButton from "../../Media/googleSignIn.png";
 import {
   Card,
   CardContent,
@@ -13,7 +17,40 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 function LoginCard() {
-  return (
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(false);
+  const signIn = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log("success");
+      setSuccess(true);
+      setEmail("");
+      setPassword("");
+    } catch (err) {
+      console.log("failure");
+    }
+  };
+  const signInWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      if (user) {
+        // User successfully signed in, you can now navigate or perform other actions
+        console.log("User successfully signed in:", user);
+        setSuccess(true);
+      } else {
+        console.log("failed to login");
+      }
+      console.log("User successfully signed in:", user);
+      // await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return success ? (
+    <Navigate to="/" />
+  ) : (
     <div className="w-full flex flex-col items-center">
       <Card className="w-2/5">
         <CardHeader>
@@ -24,13 +61,19 @@ function LoginCard() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Input
+                  onChange={(e) => setEmail(e.target.value)}
                   id="name"
                   className="w-full"
-                  placeholder="Username or Email"
+                  placeholder="Email"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Input className="w-full" id="name" placeholder="Password" />
+                <Input
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full"
+                  id="name"
+                  placeholder="Password"
+                />
               </div>
               <h1 className="text-xs">
                 By continuing, you agree to LuxxMart's
@@ -47,7 +90,7 @@ function LoginCard() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-end">
-          <Button>Continue</Button>
+          <Button onClick={signIn}>Continue</Button>
         </CardFooter>
       </Card>
 
@@ -72,6 +115,12 @@ function LoginCard() {
       >
         Create Your Luxx Business Account
       </Link>
+      <button
+        onClick={signInWithGoogle}
+        className="  bg-black mt-2 rounded-lg "
+      >
+        <img className=" w-1/4 mx-auto h-full" src={googleButton} alt="" />
+      </button>
     </div>
   );
 }
