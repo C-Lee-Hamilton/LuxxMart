@@ -1,4 +1,5 @@
 import "./App.css";
+
 import { PageProvider } from "./Context/PageContext";
 import { SellerProvider } from "./Context/SellerContext";
 import { UserProvider } from "./Context/UserContext";
@@ -27,6 +28,7 @@ import EditItem from "./Pages/SellerPages/EditItem";
 import LoginCard from "./Components/loginCards/loginCard";
 import CreateCard from "./Components/loginCards/createCard";
 import CreateSellerCard from "./Components/loginCards/createSellerCard";
+
 const router = createBrowserRouter([
   {
     path: "/",
