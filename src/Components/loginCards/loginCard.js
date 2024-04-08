@@ -1,5 +1,6 @@
 import { auth, googleProvider } from "../../config/firebase";
 import React, { useState } from "react";
+import { usePageContext } from "../../Context/PageContext.js";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -19,12 +20,14 @@ import { Label } from "../ui/label";
 function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [success, setSuccess] = useState(false);
+
+  const { setIsLoggedIn, isLoggedIn } = usePageContext();
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log("success");
-      setSuccess(true);
+
+      setIsLoggedIn(true);
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -36,9 +39,9 @@ function LoginCard() {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       if (user) {
-        // User successfully signed in, you can now navigate or perform other actions
         console.log("User successfully signed in:", user);
-        setSuccess(true);
+
+        setIsLoggedIn(true);
       } else {
         console.log("failed to login");
       }
@@ -48,7 +51,7 @@ function LoginCard() {
       console.log(err);
     }
   };
-  return success ? (
+  return isLoggedIn ? (
     <Navigate to="/" />
   ) : (
     <div className="w-full flex flex-col items-center">

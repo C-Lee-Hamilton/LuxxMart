@@ -22,9 +22,9 @@ const firebaseConfig = {
 
   measurementId: process.env.REACT_APP_measurementId,
 };
-console.log("Firebase Config:", firebaseConfig);
+
 const app = initializeApp(firebaseConfig);
-console.log("Process Environment Variables:", process.env);
+
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);

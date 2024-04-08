@@ -5,7 +5,9 @@ import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { InputWithButton } from "./ui/InputWithButton";
 import { BsCart } from "react-icons/bs";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 import Locationdialog from "./ui/locationdialog";
+import { usePageContext } from "../Context/PageContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +18,10 @@ import {
 } from "./ui/dropdown-menu";
 
 function NavigationBar() {
+  const { location, updateLocation, storedLocationPlaceholder, storedAddress } =
+    usePageContext();
+  // const address = location.city + "," + location.state + "," + location.zip;
+
   return (
     <div className="w-full overflow-hidden border-gold border-solid border-2 bg-black py-2 flex flex-row justify-between">
       <Link to="/">
@@ -25,8 +31,19 @@ function NavigationBar() {
           alt="logo"
         />
       </Link>
-      <Locationdialog />
-
+      {/* <Locationdialog /> */}
+      <Button onClick={updateLocation} className="bg-black hover:bg-black">
+        <HiOutlineLocationMarker className="text-2xl mr-1 text-gold" />
+        <div className="flex text-left flex-col text-xs text-gold">
+          <span className="">
+            {location.state == undefined
+              ? storedLocationPlaceholder
+              : storedAddress}
+          </span>
+          <span className="font-bold text-sm">Update location</span>
+          {/* <span className="font-bold text-sm">{location.state}</span> */}
+        </div>
+      </Button>
       <InputWithButton />
       <DropdownMenu className="w-1/10 ">
         <DropdownMenuTrigger className="text-gold  flex flex-col justify-center mr-2 text-left">

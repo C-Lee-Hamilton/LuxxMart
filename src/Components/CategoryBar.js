@@ -1,19 +1,13 @@
 import React from "react";
+import { usePageContext } from "../Context/PageContext";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import LinkDrawer from "./ui/linkDrawer";
-import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase";
+
 function CategoryBar() {
+  const { logOut } = usePageContext();
   const linkStyle = "flex items-center justify-center mr-4 text-gold";
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-      console.log("logged out");
-    } catch (err) {
-      console.log("failed to log out");
-    }
-  };
+
   return (
     <div className="w-full bg-greyblue flex flex-row whitespace-nowrap  overflow-hidden">
       <LinkDrawer />
