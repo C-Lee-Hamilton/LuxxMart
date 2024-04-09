@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -12,17 +12,29 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 function CreateCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const [username, setUsername] = useState("");
   const createAccount = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       setSuccess(true);
+      await updateProfile(userCredential.user, { displayName: username });
+      await setDoc(doc(db, "Users", userCredential.user.uid), {
+        username: username,
+        cart: [],
+        addresses: [],
+        seller: false,
+      });
+
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -43,8 +55,16 @@ function CreateCard() {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Input
-                  id="name"
+                  id="email"
                   onChange={(e) => setEmail(e.target.value)}
+                  className="w-full"
+                  placeholder="Email"
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Input
+                  id="username"
+                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full"
                   placeholder="Email"
                 />

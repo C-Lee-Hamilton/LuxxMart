@@ -29,11 +29,13 @@ function CreateSellerCard() {
         email,
         password
       );
-
+      await updateProfile(userCredential.user, { displayName: busName });
       await setDoc(doc(db, "Business Users", userCredential.user.uid), {
         businessId: busId,
         taxId: taxId,
         businessName: busName,
+        addresses: [],
+        seller: true,
       });
 
       setSuccess(true);

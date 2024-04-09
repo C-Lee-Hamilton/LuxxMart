@@ -1,4 +1,4 @@
-import { auth, googleProvider } from "../../config/firebase";
+import { auth, googleProvider, db } from "../../config/firebase";
 import React, { useState } from "react";
 import { usePageContext } from "../../Context/PageContext.js";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import googleButton from "../../Media/googleSignIn.png";
+import { doc, setDoc } from "firebase/firestore";
 import {
   Card,
   CardContent,
@@ -21,12 +22,14 @@ function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setIsLoggedIn, isLoggedIn } = usePageContext();
+  const { setIsLoggedIn, isLoggedIn} = usePageContext();
   const signIn = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+      console.log(user.displayName);
       console.log("success");
-
+      // setUserName(user.displayName);
       setIsLoggedIn(true);
       setEmail("");
       setPassword("");
@@ -38,15 +41,21 @@ function LoginCard() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      if (user) {
-        console.log("User successfully signed in:", user);
+      user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+   
+      window.localStorage.setItem(
+        "stored-name",
+        JSON.stringify(result.user.displayName)
+      );
+      await setDoc(doc(db, "Users", result.user.uid), {
+        username: result.user.displayName,
+        email: result.user.email,
+        cart: [],
+        addresses: [],
+        seller: false,
+      });
 
-        setIsLoggedIn(true);
-      } else {
-        console.log("failed to login");
-      }
-      console.log("User successfully signed in:", user);
-      // await signInWithPopup(auth, googleProvider);
+      
     } catch (err) {
       console.log(err);
     }

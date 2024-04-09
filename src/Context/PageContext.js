@@ -8,6 +8,11 @@ export const usePageContext = () => useContext(PageContext);
 
 export const PageProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [userName, setUserName] = useState("sign in");
+  const [storedName, setStoredName] = useState(() => {
+    const storedNameFromLocalStorage = JSON.parse(window.localStorage.getItem("stored-name"));
+    return storedNameFromLocalStorage || "sign in";
+  });
   const { location, updateLocation } = useGetAddress(
     process.env.REACT_APP_LOC_API
   );
@@ -30,10 +35,19 @@ export const PageProvider = ({ children }) => {
       : console.log();
   }, [storedAddress]);
 
+  useEffect(() => {
+    const storedName2 = JSON.parse(window.localStorage.getItem("stored-name"));
+    setStoredName(storedName2); 
+  }, [isLoggedIn]);
+  
+
   const logOut = async () => {
     try {
       await signOut(auth);
       setIsLoggedIn(false);
+      
+      setStoredName("sign in");
+      window.localStorage.setItem("stored-name", JSON.stringify("sign in"));
       console.log("logged out");
     } catch (err) {
       console.log("failed to log out");
@@ -50,6 +64,10 @@ export const PageProvider = ({ children }) => {
         isLoggedIn,
         setIsLoggedIn,
         logOut,
+        // userName,
+        // setUserName,
+        storedName,
+        setStoredName
       }}
     >
       {children}
