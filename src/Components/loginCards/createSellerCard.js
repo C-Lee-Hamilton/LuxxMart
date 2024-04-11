@@ -32,6 +32,7 @@ function CreateSellerCard() {
       await updateProfile(userCredential.user, { displayName: busName });
       await setDoc(doc(db, "Business Users", userCredential.user.uid), {
         businessId: busId,
+        email: email,
         taxId: taxId,
         businessName: busName,
         addresses: [],

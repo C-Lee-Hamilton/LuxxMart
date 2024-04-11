@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import LinkDrawer from "./ui/linkDrawer";
 
 function CategoryBar() {
-  const { logOut } = usePageContext();
+  const { isBusAcct } = usePageContext();
   const linkStyle = "flex items-center justify-center mr-4 text-gold";
 
   return (
@@ -36,10 +36,11 @@ function CategoryBar() {
         <Link to="/categories" className={linkStyle}>
           Apparel
         </Link>
-        <Link to="/sellerhome" className={linkStyle}>
-          Seller Home
-        </Link>
-        <Button onClick={logOut}>Sign Out</Button>
+        {isBusAcct && (
+          <Link to="/sellerhome" className={linkStyle}>
+            Seller Home
+          </Link>
+        )}
       </>
     </div>
   );

@@ -6,7 +6,14 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import googleButton from "../../Media/googleSignIn.png";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import {
   Card,
   CardContent,
@@ -22,14 +29,34 @@ function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setIsLoggedIn, isLoggedIn} = usePageContext();
+  const { setIsLoggedIn, isLoggedIn, isBusAcct, setIsBusAcct } =
+    usePageContext();
   const signIn = async () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      const user = result.user;
-      console.log(user.displayName);
-      console.log("success");
-      // setUserName(user.displayName);
+
+      window.localStorage.setItem(
+        "stored-name",
+        JSON.stringify(result.user.displayName)
+      );
+      window.localStorage.setItem("logged-in", JSON.stringify("true"));
+
+      const bq = query(
+        collection(db, "Business Users"),
+        where("email", "==", email)
+      );
+
+      const bquerySnapshot = await getDocs(bq);
+
+      const filteredBusData = bquerySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+
+      filteredBusData.length > 0 ? setIsBusAcct(true) : setIsBusAcct(false);
+      filteredBusData.length > 0
+        ? window.localStorage.setItem("is-bus", JSON.stringify("true"))
+        : window.localStorage.setItem("is-bus", JSON.stringify("false"));
+
       setIsLoggedIn(true);
       setEmail("");
       setPassword("");
@@ -42,11 +69,13 @@ function LoginCard() {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       user ? setIsLoggedIn(true) : setIsLoggedIn(false);
-   
+
       window.localStorage.setItem(
         "stored-name",
         JSON.stringify(result.user.displayName)
       );
+      window.localStorage.setItem("is-bus", JSON.stringify("false"));
+      setIsBusAcct(false);
       await setDoc(doc(db, "Users", result.user.uid), {
         username: result.user.displayName,
         email: result.user.email,
@@ -54,8 +83,6 @@ function LoginCard() {
         addresses: [],
         seller: false,
       });
-
-      
     } catch (err) {
       console.log(err);
     }

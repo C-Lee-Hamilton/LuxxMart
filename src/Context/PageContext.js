@@ -8,9 +8,11 @@ export const usePageContext = () => useContext(PageContext);
 
 export const PageProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [userName, setUserName] = useState("sign in");
+  const [isBusAcct, setIsBusAcct] = useState(false);
   const [storedName, setStoredName] = useState(() => {
-    const storedNameFromLocalStorage = JSON.parse(window.localStorage.getItem("stored-name"));
+    const storedNameFromLocalStorage = JSON.parse(
+      window.localStorage.getItem("stored-name")
+    );
     return storedNameFromLocalStorage || "sign in";
   });
   const { location, updateLocation } = useGetAddress(
@@ -37,18 +39,25 @@ export const PageProvider = ({ children }) => {
 
   useEffect(() => {
     const storedName2 = JSON.parse(window.localStorage.getItem("stored-name"));
-    setStoredName(storedName2); 
+    setStoredName(storedName2);
+    const storedLoginStatus = JSON.parse(
+      window.localStorage.getItem("logged-in")
+    );
+    storedLoginStatus == "true" ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    const busAcct = JSON.parse(window.localStorage.getItem("is-bus"));
+    busAcct == "true" ? setIsBusAcct(true) : setIsBusAcct(false);
+    console.log(storedLoginStatus);
   }, [isLoggedIn]);
-  
 
   const logOut = async () => {
     try {
       await signOut(auth);
       setIsLoggedIn(false);
-      
+      setIsBusAcct(false);
       setStoredName("sign in");
       window.localStorage.setItem("stored-name", JSON.stringify("sign in"));
-      console.log("logged out");
+      window.localStorage.setItem("logged-in", JSON.stringify("false"));
+      window.localStorage.setItem("is-bus", JSON.stringify("false"));
     } catch (err) {
       console.log("failed to log out");
     }
@@ -67,7 +76,9 @@ export const PageProvider = ({ children }) => {
         // userName,
         // setUserName,
         storedName,
-        setStoredName
+        setStoredName,
+        isBusAcct,
+        setIsBusAcct,
       }}
     >
       {children}

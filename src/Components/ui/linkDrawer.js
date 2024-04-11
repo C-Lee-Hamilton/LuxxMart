@@ -1,7 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Button } from "./button";
-
+import { usePageContext } from "../../Context/PageContext";
 import {
   Sheet,
   SheetContent,
@@ -13,6 +13,8 @@ import {
 } from "./sheet";
 import { Link } from "react-router-dom";
 function LinkDrawer() {
+  const { logOut, isLoggedIn, storedName } = usePageContext();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -24,7 +26,7 @@ function LinkDrawer() {
       <SheetContent side="left" className="w-1/3 min-w-80 bg-greyblue h-full">
         <div className="mx-auto w-full h-full max-w-sm">
           <SheetDescription className=" mb-2 pl-4  text-offwhite mt-2 text-2xl">
-            <Link to="/login">Hello, Please Sign In</Link>
+            <Link to="/login">Hello, {storedName}</Link>
           </SheetDescription>
           <div className="bg-offwhite pl-4 w- mx-auto h-full flex flex-col gap-5 ">
             <SheetTitle className="mt-4">Shop By Department</SheetTitle>
@@ -60,13 +62,23 @@ function LinkDrawer() {
             <SheetDescription className="text-xs">
               Closed Sundays
             </SheetDescription>
-            <Link
-              to="/login"
-              className="w-2/3 mx-10 text-center py-4 bg-greyblue text-white  rounded-lg mt-5"
-            >
-              {" "}
-              Login or Sign Up
-            </Link>
+            {!isLoggedIn && (
+              <Link
+                to="/login"
+                className="w-2/3 mx-10 text-center py-4 bg-greyblue text-white  rounded-lg mt-5"
+              >
+                Log in or Sign up
+              </Link>
+            )}
+            {isLoggedIn && (
+              <Button
+                onClick={logOut}
+                className="w-2/3 mx-10 text-center py-4 bg-greyblue text-white  rounded-lg mt-5"
+              >
+                Sign Out
+              </Button>
+            )}
+
             <SheetClose className="" asChild>
               <Button className="w-2/3 mx-10 border-none bg-offwhite text-muted-foreground mb-0">
                 Click Anywhere To Close

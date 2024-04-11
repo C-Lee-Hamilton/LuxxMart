@@ -30,6 +30,7 @@ function CreateCard() {
       await updateProfile(userCredential.user, { displayName: username });
       await setDoc(doc(db, "Users", userCredential.user.uid), {
         username: username,
+        email: email,
         cart: [],
         addresses: [],
         seller: false,
