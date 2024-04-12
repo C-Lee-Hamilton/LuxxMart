@@ -31,10 +31,9 @@ const placeholderItems = [
 ];
 function SellerItemTable() {
   return (
-    <Table className="w-11/12 mx-auto overflow-hidden whitespace-nowrap">
-      <TableCaption>All Current Items</TableCaption>
-      <TableHeader>
-        <TableRow className="overflow-hidden">
+    <Table className="w-11/12 mx-auto mt-5 flex flex-col items-center  whitespace-nowrap">
+      <TableHeader className="w-full  ">
+        <TableRow className="  flex flex-row w-full justify-between">
           <TableHead className="text-left">Remove Item</TableHead>
           <TableHead className="">Serial</TableHead>
           <TableHead>Status</TableHead>
@@ -44,23 +43,31 @@ function SellerItemTable() {
           <TableHead>Edit Item</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="w-full">
         {placeholderItems.map((item) => (
-          <TableRow key={item}>
-            <Button className="text-xs ml-4">Remove</Button>
-            <TableCell className="font-medium">{item.serial}</TableCell>
+          <TableRow
+            className="flex flex-row w-full  justify-between "
+            key={item}
+          >
+            <TableCell>
+              <Button className="text-xs ">Remove</Button>
+            </TableCell>
+
+            <TableCell>{item.serial}</TableCell>
             <TableCell>{item.status}</TableCell>
             <TableCell>{item.name}</TableCell>
             <TableCell>{item.price}</TableCell>
             <TableCell>{item.saleStatus}</TableCell>
-            <Link
-              className="
+            <TableCell>
+              <Link
+                className="
             border-solid border-greyblue border-2
-            h-10 px-4 py-2 ml-4 bg-gold text-black rounded-sm text-xs"
-              to="/edititem"
-            >
-              Edit
-            </Link>
+            h-10 px-4 py-2  bg-gold text-black rounded-sm text-xs"
+                to="/edititem"
+              >
+                Edit
+              </Link>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

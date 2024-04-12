@@ -1,24 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePageContext } from "../../Context/PageContext";
 import SellerItemTable from "../../Components/SellerItemTable";
-import { Button } from "../../Components/ui/button";
+import Photobar from "../../Components/sellerComponents/photobar";
 function SellerHome() {
+  const { storedName } = usePageContext();
   return (
-    <div className="w-full flex flex-col items-center h-screen border-solid border-greyblue border-2">
-      <div className="w-11/12 h-1/6 mb-10 mt-2 flex justify-start">
-        <span className="border-solid w-1/4 border-2 border-red-500 h-full">
-          seller photo
-        </span>
-        <h1 className="h-full bg-red-300 w-3/4">Store Name</h1>
-      </div>
-      <Button variant="secondary">Upload Store Photo</Button>
+    <div className="w-full flex flex-col bg-offwhite min-h-screen border-solid border-greyblue border-2">
+      <Photobar />
+
       <Link
-        className="p-5 mt-0 border-solid border-greyblue border-2 bg-gold rounded-sm hover:bg-darkgold"
+        className="px-3 py-1 mx-auto mt-10 border-solid border-greyblue border-2 bg-gold rounded-sm hover:bg-darkgold"
         to="/additem"
       >
         Add Item To Store
       </Link>
       <SellerItemTable />
+      <h1 className="   rounded-lg bg-black text-darkgold mt-10 w-11/12 mx-auto py-5  underline text-5xl flex  justify-center ">
+        {storedName}
+      </h1>
     </div>
   );
 }

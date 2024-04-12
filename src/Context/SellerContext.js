@@ -1,10 +1,21 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 // import axios from "axios";
 
 const SellerContext = createContext();
 
-export const usePageContext = () => useContext(SellerContext);
+export const useSellerContext = () => useContext(SellerContext);
 
 export const SellerProvider = ({ children }) => {
-  return <SellerContext.Provider value={{}}>{children}</SellerContext.Provider>;
+  const [storedImg, setStoredImg] = useState();
+
+  return (
+    <SellerContext.Provider
+      value={{
+        storedImg,
+        setStoredImg,
+      }}
+    >
+      {children}
+    </SellerContext.Provider>
+  );
 };

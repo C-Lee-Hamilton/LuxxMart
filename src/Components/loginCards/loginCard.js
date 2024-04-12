@@ -34,7 +34,7 @@ function LoginCard() {
   const signIn = async () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-
+      window.localStorage.setItem("uid", JSON.stringify(result.user.uid));
       window.localStorage.setItem(
         "stored-name",
         JSON.stringify(result.user.displayName)
@@ -60,6 +60,7 @@ function LoginCard() {
       setIsLoggedIn(true);
       setEmail("");
       setPassword("");
+      console.log(result.user);
     } catch (err) {
       console.log("failure");
     }

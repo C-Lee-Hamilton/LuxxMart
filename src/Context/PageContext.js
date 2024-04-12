@@ -9,6 +9,7 @@ export const usePageContext = () => useContext(PageContext);
 export const PageProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isBusAcct, setIsBusAcct] = useState(false);
+  const [uid, setUid] = useState("");
   const [storedName, setStoredName] = useState(() => {
     const storedNameFromLocalStorage = JSON.parse(
       window.localStorage.getItem("stored-name")
@@ -38,6 +39,8 @@ export const PageProvider = ({ children }) => {
   }, [storedAddress]);
 
   useEffect(() => {
+    const userId = JSON.parse(window.localStorage.getItem("uid"));
+    setUid(userId);
     const storedName2 = JSON.parse(window.localStorage.getItem("stored-name"));
     setStoredName(storedName2);
     const storedLoginStatus = JSON.parse(
@@ -58,6 +61,7 @@ export const PageProvider = ({ children }) => {
       window.localStorage.setItem("stored-name", JSON.stringify("sign in"));
       window.localStorage.setItem("logged-in", JSON.stringify("false"));
       window.localStorage.setItem("is-bus", JSON.stringify("false"));
+      window.localStorage.setItem("uid", JSON.stringify(""));
     } catch (err) {
       console.log("failed to log out");
     }
@@ -79,6 +83,7 @@ export const PageProvider = ({ children }) => {
         setStoredName,
         isBusAcct,
         setIsBusAcct,
+        uid,
       }}
     >
       {children}
