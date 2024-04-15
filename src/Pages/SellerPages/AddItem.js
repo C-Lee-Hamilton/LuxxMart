@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { storage, db } from "../../config/firebase";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { usePageContext } from "../../Context/PageContext";
+import { ref, uploadBytes } from "firebase/storage";
 import {
   Form,
   FormControl,
@@ -26,6 +29,7 @@ import { Input } from "../../Components/ui/input";
 import { Button } from "../../Components/ui/button";
 import { Textarea } from "../../Components/ui/textarea";
 import ItemPhotoUpload from "../../Components/sellerComponents/itemPhotoUpload";
+import { doc, setDoc } from "firebase/firestore";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -69,7 +73,8 @@ const formSchema = z.object({
 
 function AddItem() {
   const [fileUpload, setFileUpload] = useState([]);
-
+  const [imgErr, setImgErr] = useState("");
+  const { uid } = usePageContext();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,9 +92,43 @@ function AddItem() {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
-  }
+  const onSubmit = async (values) => {
+    if (fileUpload.length < 1) {
+      setImgErr("Images Required");
+      return;
+    }
+
+    try {
+      fileUpload.forEach((img) => {
+        const fileRef = ref(
+          storage,
+          `product/${uid}/${values.name}/${img.name}`
+        );
+        uploadBytes(fileRef, img).then(() => {
+          console.log("success");
+        });
+      });
+
+      await setDoc(doc(db, "Product", uid, "Name", values.name), {
+        name: values.name,
+        serial: values.serial,
+        price: values.price,
+        description: values.description,
+        category: values.category,
+        tags: values.tags,
+        status: values.status,
+        warranty: values.warranty,
+        weight: values.weight,
+        dimensions: values.dimensions,
+        extra: values.extra,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    console.log(values.serial);
+    console.log(fileUpload);
+  };
 
   return (
     <div className=" grid  bg-black sm:bg-offwhite sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3    border-black border-4 border-solid ">
@@ -97,6 +136,7 @@ function AddItem() {
         <ItemPhotoUpload
           setFileUpload={setFileUpload}
           fileUpload={fileUpload}
+          imgErr={imgErr}
         />
       </div>
 

@@ -9,7 +9,7 @@ import {
 } from "../ui/photoUploadCarousel";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-function ItemPhotoUpload({ setFileUpload, fileUpload }) {
+function ItemPhotoUpload({ setFileUpload, fileUpload, imgErr }) {
   return (
     <div className="flex flex-col bg-black h-full ">
       <h1 className="mx-auto text-darkgold mt-5 mb-5 text-xl">Upload Photos</h1>
@@ -58,6 +58,7 @@ function ItemPhotoUpload({ setFileUpload, fileUpload }) {
         }}
         multiple
       />
+      <h1 className="text-red-500 mx-auto">{imgErr}</h1>
     </div>
   );
 }
