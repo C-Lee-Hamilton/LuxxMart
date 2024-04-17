@@ -7,12 +7,15 @@ export const useSellerContext = () => useContext(SellerContext);
 
 export const SellerProvider = ({ children }) => {
   const [storedImg, setStoredImg] = useState();
+  const [itemList, setItemList] = useState([]);
 
   return (
     <SellerContext.Provider
       value={{
         storedImg,
         setStoredImg,
+        itemList,
+        setItemList,
       }}
     >
       {children}

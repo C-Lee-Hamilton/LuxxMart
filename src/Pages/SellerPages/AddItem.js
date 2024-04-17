@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { storage, db } from "../../config/firebase";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import { z } from "zod";
-
+import { v4 } from "uuid";
 import { usePageContext } from "../../Context/PageContext";
 import { ref, uploadBytes } from "firebase/storage";
 import {
@@ -72,9 +73,11 @@ const formSchema = z.object({
 });
 
 function AddItem() {
+  const [success, setSuccess] = useState(false);
   const [fileUpload, setFileUpload] = useState([]);
   const [imgErr, setImgErr] = useState("");
   const { uid } = usePageContext();
+  const uuid = v4();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -109,7 +112,7 @@ function AddItem() {
         });
       });
 
-      await setDoc(doc(db, "Product", uid, "Name", values.name), {
+      await setDoc(doc(db, "Product", uuid), {
         name: values.name,
         serial: values.serial,
         price: values.price,
@@ -121,16 +124,19 @@ function AddItem() {
         weight: values.weight,
         dimensions: values.dimensions,
         extra: values.extra,
+        sale: "inactive",
+        owner: uid,
+        storeId: uuid,
       });
+      setSuccess(true);
     } catch (err) {
       console.error(err);
     }
-
-    console.log(values.serial);
-    console.log(fileUpload);
   };
 
-  return (
+  return success ? (
+    <Navigate to="/sellerhome" />
+  ) : (
     <div className=" grid  bg-black sm:bg-offwhite sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3    border-black border-4 border-solid ">
       <div className="w-full  xs:w-1/2 col-span-1 h-full">
         <ItemPhotoUpload
@@ -188,7 +194,7 @@ function AddItem() {
                 <FormControl>
                   <Input
                     className="w-10/12 mx-auto border-2 border-solid border-darkgold rounded-md"
-                    placeholder="Price"
+                    placeholder="Price (in USD)"
                     {...field}
                   />
                 </FormControl>
@@ -227,8 +233,18 @@ function AddItem() {
                       <SelectContent>
                         <SelectGroup className="w-10/12 mx-auto">
                           <SelectItem value="Gems">Gems</SelectItem>
-
                           <SelectItem value="Jewelry">Jewelry</SelectItem>
+                          <SelectItem value="Apparel">Apparel</SelectItem>
+                          <SelectItem value="Home&Office">
+                            Home & Office
+                          </SelectItem>
+                          <SelectItem value="Kitchen">Kitchen</SelectItem>
+                          <SelectItem value="TimePieces">
+                            Time Pieces
+                          </SelectItem>
+                          <SelectItem value="RareMetals">
+                            Rare Metals
+                          </SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>

@@ -21,6 +21,7 @@ function Photobar() {
   const uploadFile = async () => {
     if (!fileUpload) return;
     const filesFolderRef = ref(storage, `profile/${uid}/${fileUpload.name}`);
+
     const deleteFolderRef = ref(storage, `profile/${uid}`);
     try {
       const listResult = await listAll(deleteFolderRef);
@@ -44,23 +45,20 @@ function Photobar() {
     }
   };
 
+  const fetchImages = async () => {
+    try {
+      const response = await listAll(imageListRef);
+      const urls = await Promise.all(
+        response.items.map((item) => getDownloadURL(item))
+      );
+      setStoredImg(urls);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
   useEffect(() => {
-    if (!uid) return;
-
-    const fetchImages = async () => {
-      try {
-        const response = await listAll(imageListRef);
-        const urls = await Promise.all(
-          response.items.map((item) => getDownloadURL(item))
-        );
-        setStoredImg(urls);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
-
     fetchImages();
-  }, [uid]);
+  }, []);
 
   return (
     <div className="flex flex-col mx-auto w-11/12 ">
