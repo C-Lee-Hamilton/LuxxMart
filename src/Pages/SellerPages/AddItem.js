@@ -103,10 +103,7 @@ function AddItem() {
 
     try {
       fileUpload.forEach((img) => {
-        const fileRef = ref(
-          storage,
-          `product/${uid}/${values.name}/${img.name}`
-        );
+        const fileRef = ref(storage, `product/${uid}/${uuid}/${img.name}`);
         uploadBytes(fileRef, img).then(() => {
           console.log("success");
         });

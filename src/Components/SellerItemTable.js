@@ -38,8 +38,12 @@ function SellerItemTable() {
     }
   };
   useEffect(() => {
-    getItemList();
-  }, []);
+    var i = 0;
+    if (i === 0) {
+      getItemList();
+      var i = 1;
+    }
+  });
 
   const deleteProduct = async (id) => {
     const productDoc = doc(db, "Product", id);
@@ -66,7 +70,7 @@ function SellerItemTable() {
           <TableHead>Edit Item</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody className="w-full">
+      <TableBody className="w-full ">
         {itemList.map((item, index) => (
           <TableRow
             className="flex flex-row w-full  justify-between "
@@ -85,7 +89,7 @@ function SellerItemTable() {
 
             <TableCell>{item.serial}</TableCell>
             <TableCell>{item.status}</TableCell>
-            <TableCell>{item.name}</TableCell>
+            <TableCell className="overflow-x-hidden">{item.name}</TableCell>
             <TableCell>{item.price}</TableCell>
             <TableCell>{item.sale}</TableCell>
             <TableCell>

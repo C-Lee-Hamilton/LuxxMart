@@ -57,8 +57,12 @@ function Photobar() {
     }
   };
   useEffect(() => {
-    fetchImages();
-  }, []);
+    var i = 0;
+    if (i === 0) {
+      fetchImages();
+      var i = 1;
+    }
+  });
 
   return (
     <div className="flex flex-col mx-auto w-11/12 ">
