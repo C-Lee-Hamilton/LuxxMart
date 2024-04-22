@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import { usePageContext } from "./PageContext";
-// import axios from "axios";
 
 const SellerContext = createContext();
 

@@ -49,7 +49,6 @@ export const PageProvider = ({ children }) => {
     storedLoginStatus == "true" ? setIsLoggedIn(true) : setIsLoggedIn(false);
     const busAcct = JSON.parse(window.localStorage.getItem("is-bus"));
     busAcct == "true" ? setIsBusAcct(true) : setIsBusAcct(false);
-    console.log(storedLoginStatus);
   }, [isLoggedIn]);
 
   const logOut = async () => {
