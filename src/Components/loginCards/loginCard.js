@@ -17,20 +17,17 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "../ui/card";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 
 function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setIsLoggedIn, isLoggedIn, isBusAcct, setIsBusAcct } =
-    usePageContext();
+  const { setIsLoggedIn, isLoggedIn, setIsBusAcct } = usePageContext();
   const signIn = async () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
@@ -109,6 +106,7 @@ function LoginCard() {
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Input
+                  type="password"
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full"
                   id="name"

@@ -6,11 +6,11 @@ function UserHome() {
     <div className="h-full flex flex-col w-full">
       <IndexCarousel />
 
+      <ItemCarousel category="Kitchen" />
+      {/* <ItemCarousel />
       <ItemCarousel />
       <ItemCarousel />
-      <ItemCarousel />
-      <ItemCarousel />
-      <ItemCarousel />
+      <ItemCarousel /> */}
     </div>
   );
 }

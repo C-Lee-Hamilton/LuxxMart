@@ -1,23 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  query,
-  where,
-  collection,
-  getDocs,
-  doc,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../config/firebase";
-import { usePageContext } from "../Context/PageContext";
-
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSellerContext } from "../Context/SellerContext";
 import ItemEditor from "./sellerComponents/itemEditor";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -25,37 +12,11 @@ import {
 import { Button } from "./ui/button";
 
 function SellerItemTable() {
-  const { uid } = usePageContext();
-  const [itemList, setItemList] = useState([]);
-  const getItemList = async () => {
-    try {
-      const q = query(collection(db, "Product"), where("owner", "==", uid));
-      const qSnapshot = await getDocs(q);
-      const itemListSnap = qSnapshot.docs.map((doc) => doc.data());
-      setItemList(itemListSnap);
-    } catch (err) {
-      console.error("error getting items");
-    }
-  };
+  const { itemList, memoGetItemList, deleteProduct } = useSellerContext();
+
   useEffect(() => {
-    var i = 0;
-    if (i === 0) {
-      getItemList();
-      var i = 1;
-    }
-  });
-
-  const deleteProduct = async (id) => {
-    const productDoc = doc(db, "Product", id);
-    await deleteDoc(productDoc);
-    getItemList();
-  };
-
-  const getList = () => {
-    console.log(itemList);
-
-    console.log(uid);
-  };
+    memoGetItemList();
+  }, []);
 
   return (
     <Table className="w-11/12 mx-auto mt-5 flex flex-col items-center  whitespace-nowrap">
@@ -93,15 +54,6 @@ function SellerItemTable() {
             <TableCell>{item.price}</TableCell>
             <TableCell>{item.sale}</TableCell>
             <TableCell>
-              {/* <Link
-                className="
-            border-solid border-greyblue border-2
-            h-10 px-4 py-2  bg-gold text-black rounded-sm text-xs"
-                to="/edititem"
-              >
-                Edit
-              </Link> */}
-
               <ItemEditor info={item} />
             </TableCell>
           </TableRow>
